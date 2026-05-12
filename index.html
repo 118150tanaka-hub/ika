@@ -316,7 +316,12 @@
   const fullscreenImage =
   document.getElementById('fullscreenImage');
 
+  const viewer =
+  document.getElementById('viewer');
+
   let currentIndex = 0;
+
+  // スライド表示
 
   function showSlide(index){
 
@@ -328,7 +333,7 @@
 
     pageNumber.textContent = index + 1;
 
-    // 全画面中なら画像も更新
+    // 全画面中なら画像更新
 
     if(fullscreen.classList.contains('active')){
 
@@ -340,7 +345,7 @@
     }
   }
 
-  // 次へ
+  // 次へボタン
 
   document.getElementById('nextBtn')
   .addEventListener('click',()=>{
@@ -355,7 +360,7 @@
 
   });
 
-  // 戻る
+  // 戻るボタン
 
   document.getElementById('prevBtn')
   .addEventListener('click',()=>{
@@ -370,10 +375,9 @@
 
   });
 
-  // フルスクリーン
+  // フルスクリーン表示
 
-  document.getElementById('viewer')
-  .addEventListener('click',()=>{
+  viewer.addEventListener('click',()=>{
 
     const currentImage =
     slides[currentIndex].querySelector('img');
@@ -385,7 +389,7 @@
 
   });
 
-  // 閉じる
+  // 閉じるボタン
 
   document.getElementById('closeBtn')
   .addEventListener('click',()=>{
@@ -408,45 +412,45 @@
 
   // キーボード操作
 
-  document.addEventListener('keydown',(e)=>{
+  window.addEventListener('keydown',(e)=>{
 
-    // 全画面中だけ
+    // 全画面中だけ反応
 
-    if(fullscreen.classList.contains('active')){
+    if(!fullscreen.classList.contains('active')){
+      return;
+    }
 
-      // →キー
+    // → 次へ
 
-      if(e.key === 'ArrowRight'){
+    if(e.key === 'ArrowRight'){
 
-        currentIndex++;
+      currentIndex++;
 
-        if(currentIndex >= slides.length){
-          currentIndex = 0;
-        }
-
-        showSlide(currentIndex);
+      if(currentIndex >= slides.length){
+        currentIndex = 0;
       }
 
-      // ←キー
+      showSlide(currentIndex);
+    }
 
-      if(e.key === 'ArrowLeft'){
+    // ← 戻る
 
-        currentIndex--;
+    if(e.key === 'ArrowLeft'){
 
-        if(currentIndex < 0){
-          currentIndex = slides.length - 1;
-        }
+      currentIndex--;
 
-        showSlide(currentIndex);
+      if(currentIndex < 0){
+        currentIndex = slides.length - 1;
       }
 
-      // ESCキーで閉じる
+      showSlide(currentIndex);
+    }
 
-      if(e.key === 'Escape'){
+    // ESCで閉じる
 
-        fullscreen.classList.remove('active');
+    if(e.key === 'Escape'){
 
-      }
+      fullscreen.classList.remove('active');
 
     }
 
