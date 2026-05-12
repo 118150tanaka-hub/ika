@@ -42,8 +42,10 @@
     .viewer{
 
       width:100%;
-       height:80vh;
-
+      
+      display:flex;
+      justify-content:center;
+      align-items:center;
       background:#222;
 
       border-radius:16px;
@@ -56,13 +58,17 @@
       0 10px 40px rgba(0,0,0,0.5);
 
       cursor:pointer;
+      
     }
 
     .slide{
-      width:100%;
-      height:100%;
+      display:none;
 
-        object-fit:contain;
+      width:100%;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
     }
 
     .slide.active{
@@ -70,9 +76,13 @@
     }
 
     .slide img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+      max-width:100%;
+      max-height:85vh;
+
+      width:auto;
+      height:auto;
+
+      object-fit:contain;
     }
 
     .controls{
@@ -250,7 +260,7 @@
       </div>
 
       <div class="slide">
-        <img src="images/P17.jpg" alt="P17">
+        <img src="images/p17.jpg" alt="P17">
       </div>
 
       <div class="slide">
