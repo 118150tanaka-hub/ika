@@ -303,99 +303,156 @@
 
   </div>
 
-  <script>
+ <script>
 
-    const slides = document.querySelectorAll('.slide');
+  const slides = document.querySelectorAll('.slide');
 
-    const pageNumber =
-    document.getElementById('pageNumber');
+  const pageNumber =
+  document.getElementById('pageNumber');
 
-    const fullscreen =
-    document.getElementById('fullscreen');
+  const fullscreen =
+  document.getElementById('fullscreen');
 
-    const fullscreenImage =
-    document.getElementById('fullscreenImage');
+  const fullscreenImage =
+  document.getElementById('fullscreenImage');
 
-    let currentIndex = 0;
+  let currentIndex = 0;
 
-    function showSlide(index){
+  function showSlide(index){
 
-      slides.forEach(slide=>{
-        slide.classList.remove('active');
-      });
-
-      slides[index].classList.add('active');
-
-      pageNumber.textContent = index + 1;
-    }
-
-    // 次へ
-
-    document.getElementById('nextBtn')
-    .addEventListener('click',()=>{
-
-      currentIndex++;
-
-      if(currentIndex >= slides.length){
-        currentIndex = 0;
-      }
-
-      showSlide(currentIndex);
-
+    slides.forEach(slide=>{
+      slide.classList.remove('active');
     });
 
-    // 戻る
+    slides[index].classList.add('active');
 
-    document.getElementById('prevBtn')
-    .addEventListener('click',()=>{
+    pageNumber.textContent = index + 1;
 
-      currentIndex--;
+    // 全画面中なら画像も更新
 
-      if(currentIndex < 0){
-        currentIndex = slides.length - 1;
-      }
-
-      showSlide(currentIndex);
-
-    });
-
-    // フルスクリーン
-
-    document.getElementById('viewer')
-    .addEventListener('click',()=>{
+    if(fullscreen.classList.contains('active')){
 
       const currentImage =
-      slides[currentIndex].querySelector('img');
+      slides[index].querySelector('img');
 
       fullscreenImage.src =
       currentImage.src;
+    }
+  }
 
-      fullscreen.classList.add('active');
+  // 次へ
 
-    });
+  document.getElementById('nextBtn')
+  .addEventListener('click',()=>{
 
-    // 閉じる
+    currentIndex++;
 
-    document.getElementById('closeBtn')
-    .addEventListener('click',()=>{
+    if(currentIndex >= slides.length){
+      currentIndex = 0;
+    }
+
+    showSlide(currentIndex);
+
+  });
+
+  // 戻る
+
+  document.getElementById('prevBtn')
+  .addEventListener('click',()=>{
+
+    currentIndex--;
+
+    if(currentIndex < 0){
+      currentIndex = slides.length - 1;
+    }
+
+    showSlide(currentIndex);
+
+  });
+
+  // フルスクリーン
+
+  document.getElementById('viewer')
+  .addEventListener('click',()=>{
+
+    const currentImage =
+    slides[currentIndex].querySelector('img');
+
+    fullscreenImage.src =
+    currentImage.src;
+
+    fullscreen.classList.add('active');
+
+  });
+
+  // 閉じる
+
+  document.getElementById('closeBtn')
+  .addEventListener('click',()=>{
+
+    fullscreen.classList.remove('active');
+
+  });
+
+  // 背景クリックで閉じる
+
+  fullscreen.addEventListener('click',(e)=>{
+
+    if(e.target === fullscreen){
 
       fullscreen.classList.remove('active');
 
-    });
+    }
 
-    // 背景クリックで閉じる
+  });
 
-    fullscreen.addEventListener('click',(e)=>{
+  // キーボード操作
 
-      if(e.target === fullscreen){
+  document.addEventListener('keydown',(e)=>{
+
+    // 全画面中だけ
+
+    if(fullscreen.classList.contains('active')){
+
+      // →キー
+
+      if(e.key === 'ArrowRight'){
+
+        currentIndex++;
+
+        if(currentIndex >= slides.length){
+          currentIndex = 0;
+        }
+
+        showSlide(currentIndex);
+      }
+
+      // ←キー
+
+      if(e.key === 'ArrowLeft'){
+
+        currentIndex--;
+
+        if(currentIndex < 0){
+          currentIndex = slides.length - 1;
+        }
+
+        showSlide(currentIndex);
+      }
+
+      // ESCキーで閉じる
+
+      if(e.key === 'Escape'){
 
         fullscreen.classList.remove('active');
 
       }
 
-    });
+    }
 
-  </script>
+  });
+
+</script>
 
 </body>
 </html>
