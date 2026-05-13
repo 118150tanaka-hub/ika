@@ -26,6 +26,8 @@ body{
   align-items:center;
 
   padding:40px;
+
+  overflow:hidden;
 }
 
 /* ローディング */
@@ -43,10 +45,27 @@ body{
   background:black;
 
   display:flex;
+  flex-direction:column;
+
   justify-content:center;
   align-items:center;
 
+  gap:24px;
+
   z-index:999999;
+
+  transition:
+  opacity 1s ease,
+  visibility 1s ease;
+}
+
+#loading.hide{
+
+  opacity:0;
+
+  visibility:hidden;
+
+  pointer-events:none;
 }
 
 #loading video{
@@ -57,6 +76,35 @@ body{
   height:auto;
 
   object-fit:contain;
+}
+
+/* Loading文字 */
+
+.loading-text{
+
+  font-size:18px;
+
+  letter-spacing:4px;
+
+  opacity:.8;
+
+  animation:blink 1.2s infinite;
+}
+
+@keyframes blink{
+
+  0%{
+    opacity:.2;
+  }
+
+  50%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:.2;
+  }
+
 }
 
 /* コンテンツ */
@@ -71,6 +119,14 @@ body{
   align-items:center;
 
   gap:20px;
+
+  opacity:0;
+
+  transition:opacity 1s ease;
+}
+
+.container.show{
+  opacity:1;
 }
 
 .viewer{
@@ -157,7 +213,7 @@ button:hover{
   font-size:15px;
 }
 
-/* フルスクリーン */
+/* fullscreen */
 
 .fullscreen{
 
@@ -247,11 +303,15 @@ button:hover{
 
   </video>
 
+  <div class="loading-text">
+    Loading...
+  </div>
+
 </div>
 
 <!-- コンテンツ -->
 
-<div class="container">
+<div class="container" id="container">
 
   <div class="viewer" id="viewer">
 
@@ -359,7 +419,7 @@ button:hover{
 
 </div>
 
-<!-- フルスクリーン -->
+<!-- fullscreen -->
 
 <div class="fullscreen" id="fullscreen">
 
@@ -373,20 +433,27 @@ button:hover{
 
 <script>
 
-/* ローディング */
+/* loading */
 
 window.addEventListener("load",()=>{
 
   setTimeout(()=>{
 
-    document.getElementById("loading")
-    .style.display = "none";
+    document
+    .getElementById("loading")
+    .classList.add("hide");
+
+    document
+    .getElementById("container")
+    .classList.add("show");
+
+    document.body.style.overflow = "auto";
 
   },4000);
 
 });
 
-/* スライド */
+/* slides */
 
 const slides =
 document.querySelectorAll('.slide');
@@ -405,7 +472,7 @@ document.getElementById('viewer');
 
 let currentIndex = 0;
 
-/* 表示 */
+/* show */
 
 function showSlide(index){
 
@@ -432,7 +499,7 @@ function showSlide(index){
   }
 }
 
-/* 次へ */
+/* next */
 
 document.getElementById('nextBtn')
 .addEventListener('click',()=>{
@@ -449,7 +516,7 @@ document.getElementById('nextBtn')
 
 });
 
-/* 戻る */
+/* prev */
 
 document.getElementById('prevBtn')
 .addEventListener('click',()=>{
@@ -482,7 +549,7 @@ viewer.addEventListener('click',()=>{
 
 });
 
-/* 閉じる */
+/* close */
 
 document.getElementById('closeBtn')
 .addEventListener('click',()=>{
@@ -491,7 +558,7 @@ document.getElementById('closeBtn')
 
 });
 
-/* 背景クリック */
+/* bg click */
 
 fullscreen.addEventListener('click',(e)=>{
 
@@ -503,7 +570,7 @@ fullscreen.addEventListener('click',(e)=>{
 
 });
 
-/* キーボード */
+/* keyboard */
 
 window.addEventListener('keydown',(e)=>{
 
