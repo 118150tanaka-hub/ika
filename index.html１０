@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#111;
+  color:white;
+  font-family:sans-serif;
+
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:40px;
+}
+
+/* ローディング */
+
+#loading{
+  position:fixed;
+  inset:0;
+
+  background:black;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:999999;
+
+  transition:
+  opacity .8s ease,
+  visibility .8s ease;
+}
+
+#loading.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+#loading video{
+  width:260px;
+  max-width:70vw;
+
+  object-fit:contain;
+}
+
+/* コンテンツ */
+
+.container{
+  width:100%;
+  max-width:1100px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:20px;
+}
+
+.viewer{
+  width:100%;
+
+  min-height:70vh;
+
+  background:#222;
+
+  border-radius:16px;
+
+  overflow:hidden;
+
+  position:relative;
+
+  box-shadow:
+  0 10px 40px rgba(0,0,0,0.5);
+
+  cursor:pointer;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.slide{
+  width:100%;
+  height:100%;
+
+  display:none;
+}
+
+.slide.active{
+  display:block;
+}
+
+.slide img{
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+button{
+  padding:14px 28px;
+
+  border:none;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  font-size:16px;
+
+  background:white;
+  color:black;
+
+  transition:.2s;
+}
+
+button:hover{
+  opacity:.8;
+  transform:translateY(-2px);
+}
+
+.page{
+  opacity:.8;
+  font-size:15px;
+}
+
+/* fullscreen */
+
+.fullscreen{
+  position:fixed;
+
+  inset:0;
+
+  background:black;
+
+  display:none;
+
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+}
+
+.fullscreen.active{
+  display:flex;
+}
+
+.fullscreen img{
+  width:100%;
+  height:100%;
+
+  object-fit:contain;
+}
+
+.close-btn{
+  position:absolute;
+
+  top:20px;
+  right:20px;
+
+  background:white;
+  color:black;
+
+  border:none;
+
+  padding:10px 16px;
+
+  border-radius:10px;
+
+  cursor:pointer;
+
+  z-index:10000;
+}
+
+@media(max-width:768px){
+
+  body{
+    padding:20px;
+  }
+
+  button{
+    padding:12px 20px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ローディング -->
+
+<div id="loading">
+
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+
+    <source
+      src="videos/mahouf10.mp4"
+      type="video/mp4"
+    >
+
+  </video>
+
+</div>
+
+<!-- コンテンツ -->
+
+<div class="container">
+
+  <div class="viewer" id="viewer">
+
+    <div class="slide active">
+      <img src="images/p1.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p2.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p3.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p4.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p5.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p6.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p7.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p8.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p9.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p10.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p11.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p12.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p13.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p14.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p15.png">
+    </div>
+
+    <div class="slide">
+      <img src="images/p16.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p17.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p18.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p19.jpg">
+    </div>
+
+    <div class="slide">
+      <img src="images/p20.png">
+    </div>
+
+  </div>
+
+  <!-- ページ -->
+
+  <div class="page">
+    <span id="pageNumber">1</span> / 20
+  </div>
+
+  <!-- ボタン -->
+
+  <div class="controls">
+
+    <button id="prevBtn">
+      戻る
+    </button>
+
+    <button id="nextBtn">
+      進む
+    </button>
+
+  </div>
+
+</div>
+
+<!-- fullscreen -->
+
+<div class="fullscreen" id="fullscreen">
+
+  <button class="close-btn" id="closeBtn">
+    閉じる
+  </button>
+
+  <img id="fullscreenImage">
+
+</div>
+
+<script>
+
+const slides =
+document.querySelectorAll('.slide');
+
+const pageNumber =
+document.getElementById('pageNumber');
+
+const fullscreen =
+document.getElementById('fullscreen');
+
+const fullscreenImage =
+document.getElementById('fullscreenImage');
+
+const viewer =
+document.getElementById('viewer');
+
+const loading =
+document.getElementById('loading');
+
+let currentIndex = 0;
+
+/* preload */
+
+const imageUrls = [
+
+  "images/p1.jpg",
+  "images/p2.jpg",
+  "images/p3.jpg",
+  "images/p4.jpg",
+  "images/p5.png",
+  "images/p6.jpg",
+  "images/p7.jpg",
+  "images/p8.jpg",
+  "images/p9.png",
+  "images/p10.jpg",
+  "images/p11.jpg",
+  "images/p12.png",
+  "images/p13.png",
+  "images/p14.png",
+  "images/p15.png",
+  "images/p16.jpg",
+  "images/p17.jpg",
+  "images/p18.jpg",
+  "images/p19.jpg",
+  "images/p20.png"
+
+];
+
+function preloadImages(urls){
+
+  return Promise.all(
+
+    urls.map(url=>{
+
+      return new Promise(resolve=>{
+
+        const img = new Image();
+
+        img.src = url;
+
+        img.onload = resolve;
+        img.onerror = resolve;
+
+      });
+
+    })
+
+  );
+
+}
+
+function delay(ms){
+
+  return new Promise(resolve=>{
+
+    setTimeout(resolve, ms);
+
+  });
+
+}
+
+/* loading */
+
+window.addEventListener("load", async ()=>{
+
+  await Promise.all([
+
+    preloadImages(imageUrls),
+
+    delay(4000)
+
+  ]);
+
+  loading.classList.add("hide");
+
+});
+
+/* show slide */
+
+function showSlide(index){
+
+  slides.forEach(slide=>{
+
+    slide.classList.remove('active');
+
+  });
+
+  slides[index].classList.add('active');
+
+  pageNumber.textContent =
+  index + 1;
+
+  if(fullscreen.classList.contains('active')){
+
+    const currentImage =
+    slides[index].querySelector('img');
+
+    fullscreenImage.src =
+    currentImage.src;
+  }
+}
+
+/* next */
+
+document.getElementById('nextBtn')
+.addEventListener('click',()=>{
+
+  currentIndex++;
+
+  if(currentIndex >= slides.length){
+
+    currentIndex = 0;
+
+  }
+
+  showSlide(currentIndex);
+
+});
+
+/* prev */
+
+document.getElementById('prevBtn')
+.addEventListener('click',()=>{
+
+  currentIndex--;
+
+  if(currentIndex < 0){
+
+    currentIndex =
+    slides.length - 1;
+
+  }
+
+  showSlide(currentIndex);
+
+});
+
+/* fullscreen */
+
+viewer.addEventListener('click',()=>{
+
+  const currentImage =
+  slides[currentIndex]
+  .querySelector('img');
+
+  fullscreenImage.src =
+  currentImage.src;
+
+  fullscreen.classList.add('active');
+
+});
+
+/* close */
+
+document.getElementById('closeBtn')
+.addEventListener('click',()=>{
+
+  fullscreen.classList.remove('active');
+
+});
+
+/* bg click */
+
+fullscreen.addEventListener('click',(e)=>{
+
+  if(e.target === fullscreen){
+
+    fullscreen.classList.remove('active');
+
+  }
+
+});
+
+/* keyboard */
+
+window.addEventListener('keydown',(e)=>{
+
+  if(!fullscreen.classList.contains('active')){
+    return;
+  }
+
+  if(e.key === 'ArrowRight'){
+
+    currentIndex++;
+
+    if(currentIndex >= slides.length){
+
+      currentIndex = 0;
+
+    }
+
+    showSlide(currentIndex);
+
+  }
+
+  if(e.key === 'ArrowLeft'){
+
+    currentIndex--;
+
+    if(currentIndex < 0){
+
+      currentIndex =
+      slides.length - 1;
+
+    }
+
+    showSlide(currentIndex);
+
+  }
+
+  if(e.key === 'Escape'){
+
+    fullscreen.classList.remove('active');
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
