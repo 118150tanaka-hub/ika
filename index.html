@@ -427,11 +427,29 @@ function preloadImages(urls){
 
 }
 
+/* 最低4秒表示 */
+
+function delay(ms){
+
+  return new Promise(resolve=>{
+
+    setTimeout(resolve, ms);
+
+  });
+
+}
+
 /* ロード完了 */
 
 window.addEventListener("load", async ()=>{
 
-  await preloadImages(imageUrls);
+  await Promise.all([
+
+    preloadImages(imageUrls),
+
+    delay(4000)
+
+  ]);
 
   loading.classList.add("hide");
 
