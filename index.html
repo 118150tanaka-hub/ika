@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,6 @@ body{
 /* ローディング */
 
 #loading{
-
   position:fixed;
   inset:0;
 
@@ -54,7 +54,6 @@ body{
 }
 
 #loading video{
-
   width:260px;
   max-width:70vw;
 
@@ -75,7 +74,6 @@ body{
 }
 
 .viewer{
-
   width:100%;
 
   min-height:70vh;
@@ -110,7 +108,6 @@ body{
 }
 
 .slide img{
-
   width:100%;
   height:100%;
 
@@ -124,7 +121,6 @@ body{
 }
 
 button{
-
   padding:14px 28px;
 
   border:none;
@@ -138,23 +134,22 @@ button{
   background:white;
   color:black;
 
-  transition:0.2s;
+  transition:.2s;
 }
 
 button:hover{
-  opacity:0.8;
+  opacity:.8;
   transform:translateY(-2px);
 }
 
 .page{
-  opacity:0.8;
+  opacity:.8;
   font-size:15px;
 }
 
-/* フルスクリーン */
+/* fullscreen */
 
 .fullscreen{
-
   position:fixed;
 
   inset:0;
@@ -174,7 +169,6 @@ button:hover{
 }
 
 .fullscreen img{
-
   width:100%;
   height:100%;
 
@@ -182,7 +176,6 @@ button:hover{
 }
 
 .close-btn{
-
   position:absolute;
 
   top:20px;
@@ -229,100 +222,105 @@ button:hover{
     loop
     playsinline
   >
-    <source src="videos/mahouf10.mp4">
+
+    <source
+      src="videos/mahouf10.mp4"
+      type="video/mp4"
+    >
+
   </video>
 
 </div>
 
-<div class="container">
+<!-- コンテンツ -->
 
-  <!-- スライド -->
+<div class="container">
 
   <div class="viewer" id="viewer">
 
     <div class="slide active">
-      <img src="images/p1.jpg" alt="P1">
+      <img src="images/p1.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p2.jpg" alt="P2">
+      <img src="images/p2.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p3.jpg" alt="P3">
+      <img src="images/p3.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p4.jpg" alt="P4">
+      <img src="images/p4.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p5.png" alt="P5">
+      <img src="images/p5.png">
     </div>
 
     <div class="slide">
-      <img src="images/p6.jpg" alt="P6">
+      <img src="images/p6.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p7.jpg" alt="P7">
+      <img src="images/p7.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p8.jpg" alt="P8">
+      <img src="images/p8.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p9.png" alt="P9">
+      <img src="images/p9.png">
     </div>
 
     <div class="slide">
-      <img src="images/p10.jpg" alt="P10">
+      <img src="images/p10.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p11.jpg" alt="P11">
+      <img src="images/p11.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p12.png" alt="P12">
+      <img src="images/p12.png">
     </div>
 
     <div class="slide">
-      <img src="images/p13.png" alt="P13">
+      <img src="images/p13.png">
     </div>
 
     <div class="slide">
-      <img src="images/p14.png" alt="P14">
+      <img src="images/p14.png">
     </div>
 
     <div class="slide">
-      <img src="images/p15.png" alt="P15">
+      <img src="images/p15.png">
     </div>
 
     <div class="slide">
-      <img src="images/p16.jpg" alt="P16">
+      <img src="images/p16.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p17.jpg" alt="P17">
+      <img src="images/p17.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p18.jpg" alt="P18">
+      <img src="images/p18.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p19.jpg" alt="P19">
+      <img src="images/p19.jpg">
     </div>
 
     <div class="slide">
-      <img src="images/p20.png" alt="P20">
+      <img src="images/p20.png">
     </div>
 
   </div>
 
-  <!-- ページ番号 -->
+  <!-- ページ -->
 
   <div class="page">
     <span id="pageNumber">1</span> / 20
@@ -344,7 +342,7 @@ button:hover{
 
 </div>
 
-<!-- フルスクリーン -->
+<!-- fullscreen -->
 
 <div class="fullscreen" id="fullscreen">
 
@@ -352,13 +350,14 @@ button:hover{
     閉じる
   </button>
 
-  <img id="fullscreenImage" src="" alt="fullscreen">
+  <img id="fullscreenImage">
 
 </div>
 
 <script>
 
-const slides = document.querySelectorAll('.slide');
+const slides =
+document.querySelectorAll('.slide');
 
 const pageNumber =
 document.getElementById('pageNumber');
@@ -377,7 +376,7 @@ document.getElementById('loading');
 
 let currentIndex = 0;
 
-/* 画像先読み */
+/* preload */
 
 const imageUrls = [
 
@@ -427,8 +426,6 @@ function preloadImages(urls){
 
 }
 
-/* 最低4秒表示 */
-
 function delay(ms){
 
   return new Promise(resolve=>{
@@ -439,7 +436,7 @@ function delay(ms){
 
 }
 
-/* ロード完了 */
+/* loading */
 
 window.addEventListener("load", async ()=>{
 
@@ -455,17 +452,20 @@ window.addEventListener("load", async ()=>{
 
 });
 
-/* スライド表示 */
+/* show slide */
 
 function showSlide(index){
 
   slides.forEach(slide=>{
+
     slide.classList.remove('active');
+
   });
 
   slides[index].classList.add('active');
 
-  pageNumber.textContent = index + 1;
+  pageNumber.textContent =
+  index + 1;
 
   if(fullscreen.classList.contains('active')){
 
@@ -477,7 +477,7 @@ function showSlide(index){
   }
 }
 
-/* 次へ */
+/* next */
 
 document.getElementById('nextBtn')
 .addEventListener('click',()=>{
@@ -485,14 +485,16 @@ document.getElementById('nextBtn')
   currentIndex++;
 
   if(currentIndex >= slides.length){
+
     currentIndex = 0;
+
   }
 
   showSlide(currentIndex);
 
 });
 
-/* 戻る */
+/* prev */
 
 document.getElementById('prevBtn')
 .addEventListener('click',()=>{
@@ -500,7 +502,10 @@ document.getElementById('prevBtn')
   currentIndex--;
 
   if(currentIndex < 0){
-    currentIndex = slides.length - 1;
+
+    currentIndex =
+    slides.length - 1;
+
   }
 
   showSlide(currentIndex);
@@ -512,7 +517,8 @@ document.getElementById('prevBtn')
 viewer.addEventListener('click',()=>{
 
   const currentImage =
-  slides[currentIndex].querySelector('img');
+  slides[currentIndex]
+  .querySelector('img');
 
   fullscreenImage.src =
   currentImage.src;
@@ -521,7 +527,7 @@ viewer.addEventListener('click',()=>{
 
 });
 
-/* 閉じる */
+/* close */
 
 document.getElementById('closeBtn')
 .addEventListener('click',()=>{
@@ -530,7 +536,7 @@ document.getElementById('closeBtn')
 
 });
 
-/* 背景クリック */
+/* bg click */
 
 fullscreen.addEventListener('click',(e)=>{
 
@@ -542,7 +548,7 @@ fullscreen.addEventListener('click',(e)=>{
 
 });
 
-/* キーボード */
+/* keyboard */
 
 window.addEventListener('keydown',(e)=>{
 
@@ -555,10 +561,13 @@ window.addEventListener('keydown',(e)=>{
     currentIndex++;
 
     if(currentIndex >= slides.length){
+
       currentIndex = 0;
+
     }
 
     showSlide(currentIndex);
+
   }
 
   if(e.key === 'ArrowLeft'){
@@ -566,10 +575,14 @@ window.addEventListener('keydown',(e)=>{
     currentIndex--;
 
     if(currentIndex < 0){
-      currentIndex = slides.length - 1;
+
+      currentIndex =
+      slides.length - 1;
+
     }
 
     showSlide(currentIndex);
+
   }
 
   if(e.key === 'Escape'){
