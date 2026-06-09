@@ -1,694 +1,174 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-
-/* =========================
-   reset
-========================= */
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-/* =========================
-   body
-========================= */
-
-body{
-
-  background:#111;
-  color:white;
-  font-family:sans-serif;
-
-  width:100%;
-  min-height:100vh;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  padding:40px;
-
-  overflow:hidden;
-}
-
-/* =========================
-   loading
-========================= */
-
-#loading{
-
-  position:fixed;
-
-  top:0;
-  left:0;
-
-  width:100vw;
-  height:100vh;
-
-  background:black;
-
-  display:flex;
-  flex-direction:column;
-
-  justify-content:center;
-  align-items:center;
-
-  gap:30px;
-
-  z-index:999999;
-
-  opacity:1;
-  visibility:visible;
-
-  transition:
-  opacity 1s ease,
-  visibility 1s ease;
-}
-
-#loading.hide{
-
-  opacity:0;
-
-  visibility:hidden;
-
-  pointer-events:none;
-}
-
-/* loading video */
-
-#loading video{
-
-  width:700px;
-  max-width:90vw;
-
-  height:auto;
-
-  object-fit:contain;
-}
-
-/* loading text */
-
-.loading-text{
-
-  color:white;
-
-  font-size:22px;
-
-  font-weight:300;
-
-  letter-spacing:6px;
-
-  text-transform:uppercase;
-
-  opacity:1;
-
-  text-shadow:
-  0 0 12px rgba(255,255,255,.7);
-
-  animation:blink 1.2s infinite;
-}
-
-@keyframes blink{
-
-  0%{
-    opacity:.3;
-  }
-
-  50%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:.3;
-  }
-
-}
-
-/* =========================
-   container
-========================= */
-
-.container{
-
-  width:100%;
-  max-width:1100px;
-
-  display:flex;
-
-  flex-direction:column;
-  align-items:center;
-
-  gap:20px;
-
-  opacity:0;
-
-  visibility:hidden;
-
-  pointer-events:none;
-
-  transition:
-  opacity 1s ease,
-  visibility 1s ease;
-}
-
-.container.show{
-
-  opacity:1;
-
-  visibility:visible;
-
-  pointer-events:auto;
-}
-
-/* =========================
-   viewer
-========================= */
-
-.viewer{
-
-  width:100%;
-
-  min-height:70vh;
-
-  background:#222;
-
-  border-radius:16px;
-
-  overflow:hidden;
-
-  position:relative;
-
-  box-shadow:
-  0 10px 40px rgba(0,0,0,.5);
-
-  cursor:pointer;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* =========================
-   slide
-========================= */
-
-.slide{
-
-  width:100%;
-  height:100%;
-
-  display:none;
-}
-
-.slide.active{
-  display:block;
-}
-
-.slide img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-}
-
-/* =========================
-   controls
-========================= */
-
-.controls{
-
-  display:flex;
-  align-items:center;
-
-  gap:20px;
-}
-
-button{
-
-  padding:14px 28px;
-
-  border:none;
-
-  border-radius:10px;
-
-  cursor:pointer;
-
-  font-size:16px;
-
-  background:white;
-  color:black;
-
-  transition:.2s;
-}
-
-button:hover{
-
-  opacity:.8;
-
-  transform:translateY(-2px);
-}
-
-.page{
-
-  opacity:.8;
-
-  font-size:15px;
-}
-
-/* =========================
-   fullscreen
-========================= */
-
-.fullscreen{
-
-  position:fixed;
-
-  inset:0;
-
-  background:black;
-
-  display:none;
-
-  justify-content:center;
-  align-items:center;
-
-  z-index:9999;
-}
-
-.fullscreen.active{
-  display:flex;
-}
-
-.fullscreen img{
-
-  width:100%;
-  height:100%;
-
-  object-fit:contain;
-}
-
-.close-btn{
-
-  position:absolute;
-
-  top:20px;
-  right:20px;
-
-  background:white;
-  color:black;
-
-  border:none;
-
-  padding:10px 16px;
-
-  border-radius:10px;
-
-  cursor:pointer;
-
-  z-index:10000;
-}
-
-/* =========================
-   responsive
-========================= */
-
-@media(max-width:768px){
-
-  body{
-    padding:20px;
-  }
-
-  #loading video{
-    width:90vw;
-  }
-
-  .loading-text{
-    font-size:18px;
-    letter-spacing:4px;
-  }
-
-  button{
-    padding:12px 20px;
-  }
-
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#111;color:white;font-family:sans-serif;width:100%;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px;overflow:hidden;}
+#loading{position:fixed;top:0;left:0;width:100vw;height:100vh;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:30px;z-index:999999;opacity:1;visibility:visible;transition:opacity 1s ease,visibility 1s ease;}
+#loading.hide{opacity:0;visibility:hidden;pointer-events:none;}
+#loading video{width:700px;max-width:90vw;height:auto;object-fit:contain;}
+.loading-text{color:white;font-size:22px;font-weight:300;letter-spacing:6px;text-transform:uppercase;opacity:1;text-shadow:0 0 12px rgba(255,255,255,.7);animation:blink 1.2s infinite;}
+@keyframes blink{0%{opacity:.3;}50%{opacity:1;}100%{opacity:.3;}}
+
+#intro{position:fixed;inset:0;background:black;display:flex;justify-content:center;align-items:center;z-index:999998;opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 1s ease;}
+#intro.show{opacity:1;visibility:visible;}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.intro-box{text-align:center;color:white;}
+.intro-box p{font-size:24px;line-height:1.8;opacity:.7;font-weight:300;}
+.intro-box span{display:block;margin-top:30px;font-size:14px;letter-spacing:4px;opacity:.4;animation:blink 1.5s infinite;}
+
+.container{width:100%;max-width:1100px;display:flex;flex-direction:column;align-items:center;gap:20px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s ease,visibility 1s ease;}
+.container.show{opacity:1;visibility:visible;pointer-events:auto;}
+.viewer{width:100%;min-height:70vh;background:#222;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.5);cursor:pointer;display:flex;justify-content:center;align-items:center;}
+.slide{width:100%;height:100%;display:none;}
+.slide.active{display:block;}
+.slide img{width:100%;height:100%;object-fit:contain;}
+.controls{display:flex;align-items:center;gap:20px;}
+button{padding:14px 28px;border:none;border-radius:10px;cursor:pointer;font-size:16px;background:white;color:black;transition:.2s;}
+button:hover{opacity:.8;transform:translateY(-2px);}
+.page{opacity:.8;font-size:15px;}
+.fullscreen{position:fixed;inset:0;background:black;display:none;justify-content:center;align-items:center;z-index:9999;}
+.fullscreen.active{display:flex;}
+.fullscreen img{width:100%;height:100%;object-fit:contain;}
+.close-btn{position:absolute;top:20px;right:20px;background:white;color:black;border:none;padding:10px 16px;border-radius:10px;cursor:pointer;z-index:10000;}
 </style>
 </head>
-
 <body>
 
-<!-- =========================
-     loading
-========================= -->
-
 <div id="loading">
-
-  <video
-    autoplay
-    muted
-    loop
-    playsinline
-  >
-
-    <source
-      src="videos/mahouf10.mp4"
-      type="video/mp4"
-    >
-
-  </video>
-
-  <div class="loading-text">
-    Loading...
-  </div>
-
+<video autoplay muted loop playsinline>
+<source src="videos/mahouf10.mp4" type="video/mp4">
+</video>
+<div class="loading-text">Loading...</div>
 </div>
 
-<!-- =========================
-     main
-========================= -->
+<div id="intro">
+<div class="intro-box">
+<p>クリックで全画面表示すると<br>矢印キーで操作できます</p>
+<span>Click Anywhere</span>
+</div>
+</div>
 
 <div class="container" id="container">
-
-  <div class="viewer" id="viewer">
-
-    <div class="slide active">
-      <img src="images/p1.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p2.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p3.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p4.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p5.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p6.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p7.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p8.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p9.png">
-    </div>
-
-    <div class="slide">
-      <img src="images/p10.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p11.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p12.png">
-    </div>
-
-    <div class="slide">
-      <img src="images/p13.png">
-    </div>
-
-    <div class="slide">
-      <img src="images/p14.png">
-    </div>
-
-    <div class="slide">
-      <img src="images/p15.png">
-    </div>
-
-    <div class="slide">
-      <img src="images/p16.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p17.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p18.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p19.jpg">
-    </div>
-
-    <div class="slide">
-      <img src="images/p20.jpg">
-    </div>
-
-  </div>
-
-  <!-- page -->
-
-  <div class="page">
-    <span id="pageNumber">1</span> / 20
-  </div>
-
-  <!-- controls -->
-
-  <div class="controls">
-
-    <button id="prevBtn">
-      戻る
-    </button>
-
-    <button id="nextBtn">
-      進む
-    </button>
-
-  </div>
-
+<div class="viewer" id="viewer">
+<div class="slide active"><img src="images/p1.jpg"></div>
+<div class="slide"><img src="images/p2.jpg"></div>
+<div class="slide"><img src="images/p3.jpg"></div>
+<div class="slide"><img src="images/p4.jpg"></div>
+<div class="slide"><img src="images/p5.jpg"></div>
+<div class="slide"><img src="images/p6.jpg"></div>
+<div class="slide"><img src="images/p7.jpg"></div>
+<div class="slide"><img src="images/p8.jpg"></div>
+<div class="slide"><img src="images/p9.png"></div>
+<div class="slide"><img src="images/p10.jpg"></div>
+<div class="slide"><img src="images/p11.jpg"></div>
+<div class="slide"><img src="images/p12.png"></div>
+<div class="slide"><img src="images/p13.png"></div>
+<div class="slide"><img src="images/p14.png"></div>
+<div class="slide"><img src="images/p15.png"></div>
+<div class="slide"><img src="images/p16.jpg"></div>
+<div class="slide"><img src="images/p17.jpg"></div>
+<div class="slide"><img src="images/p18.jpg"></div>
+<div class="slide"><img src="images/p19.jpg"></div>
+<div class="slide"><img src="images/p20.jpg"></div>
 </div>
 
-<!-- =========================
-     fullscreen
-========================= -->
+<div class="page"><span id="pageNumber">1</span> / 20</div>
+
+<div class="controls">
+<button id="prevBtn">戻る</button>
+<button id="nextBtn">進む</button>
+</div>
+</div>
 
 <div class="fullscreen" id="fullscreen">
-
-  <button class="close-btn" id="closeBtn">
-    閉じる
-  </button>
-
-  <img id="fullscreenImage">
-
+<button class="close-btn" id="closeBtn">閉じる</button>
+<img id="fullscreenImage">
 </div>
 
 <script>
-
-/* =========================
-   loading
-========================= */
-
 window.addEventListener("load",()=>{
+const loading=document.getElementById("loading");
+const intro=document.getElementById("intro");
+const container=document.getElementById("container");
 
-  const loading =
-  document.getElementById("loading");
+setTimeout(()=>{
+loading.classList.add("hide");
+intro.classList.add("show");
+},4000);
 
-  const container =
-  document.getElementById("container");
-
-  setTimeout(()=>{
-
-    loading.classList.add("hide");
-
-    container.classList.add("show");
-
-    document.body.style.overflow = "auto";
-
-  },4000);
-
+intro.addEventListener("click",()=>{
+intro.classList.add("hide");
+container.classList.add("show");
+document.body.style.overflow="auto";
+});
 });
 
-/* =========================
-   slide
-========================= */
-
-const slides =
-document.querySelectorAll('.slide');
-
-const pageNumber =
-document.getElementById('pageNumber');
-
-const fullscreen =
-document.getElementById('fullscreen');
-
-const fullscreenImage =
-document.getElementById('fullscreenImage');
-
-const viewer =
-document.getElementById('viewer');
-
-let currentIndex = 0;
-
-/* show */
+const slides=document.querySelectorAll('.slide');
+const pageNumber=document.getElementById('pageNumber');
+const fullscreen=document.getElementById('fullscreen');
+const fullscreenImage=document.getElementById('fullscreenImage');
+const viewer=document.getElementById('viewer');
+let currentIndex=0;
 
 function showSlide(index){
+slides.forEach(slide=>slide.classList.remove('active'));
+slides[index].classList.add('active');
+pageNumber.textContent=index+1;
 
-  slides.forEach(slide=>{
-
-    slide.classList.remove('active');
-
-  });
-
-  slides[index]
-  .classList.add('active');
-
-  pageNumber.textContent =
-  index + 1;
-
-  if(fullscreen.classList.contains('active')){
-
-    const currentImage =
-    slides[index]
-    .querySelector('img');
-
-    fullscreenImage.src =
-    currentImage.src;
-  }
+if(fullscreen.classList.contains('active')){
+const currentImage=slides[index].querySelector('img');
+fullscreenImage.src=currentImage.src;
+}
 }
 
-/* next */
-
-document.getElementById('nextBtn')
-.addEventListener('click',()=>{
-
-  currentIndex++;
-
-  if(currentIndex >= slides.length){
-
-    currentIndex = 0;
-
-  }
-
-  showSlide(currentIndex);
-
+document.getElementById('nextBtn').addEventListener('click',()=>{
+currentIndex++;
+if(currentIndex>=slides.length){currentIndex=0;}
+showSlide(currentIndex);
 });
 
-/* prev */
-
-document.getElementById('prevBtn')
-.addEventListener('click',()=>{
-
-  currentIndex--;
-
-  if(currentIndex < 0){
-
-    currentIndex =
-    slides.length - 1;
-
-  }
-
-  showSlide(currentIndex);
-
+document.getElementById('prevBtn').addEventListener('click',()=>{
+currentIndex--;
+if(currentIndex<0){currentIndex=slides.length-1;}
+showSlide(currentIndex);
 });
-
-/* fullscreen */
 
 viewer.addEventListener('click',()=>{
-
-  const currentImage =
-  slides[currentIndex]
-  .querySelector('img');
-
-  fullscreenImage.src =
-  currentImage.src;
-
-  fullscreen.classList.add('active');
-
+const currentImage=slides[currentIndex].querySelector('img');
+fullscreenImage.src=currentImage.src;
+fullscreen.classList.add('active');
 });
 
-/* close */
-
-document.getElementById('closeBtn')
-.addEventListener('click',()=>{
-
-  fullscreen.classList.remove('active');
-
+document.getElementById('closeBtn').addEventListener('click',()=>{
+fullscreen.classList.remove('active');
 });
-
-/* bg click */
 
 fullscreen.addEventListener('click',(e)=>{
-
-  if(e.target === fullscreen){
-
-    fullscreen.classList.remove('active');
-
-  }
-
+if(e.target===fullscreen){fullscreen.classList.remove('active');}
 });
-
-/* keyboard */
 
 window.addEventListener('keydown',(e)=>{
+if(!fullscreen.classList.contains('active')) return;
 
-  if(!fullscreen.classList.contains('active')){
-    return;
-  }
+if(e.key==='ArrowRight'){
+currentIndex++;
+if(currentIndex>=slides.length){currentIndex=0;}
+showSlide(currentIndex);
+}
 
-  if(e.key === 'ArrowRight'){
+if(e.key==='ArrowLeft'){
+currentIndex--;
+if(currentIndex<0){currentIndex=slides.length-1;}
+showSlide(currentIndex);
+}
 
-    currentIndex++;
-
-    if(currentIndex >= slides.length){
-
-      currentIndex = 0;
-
-    }
-
-    showSlide(currentIndex);
-
-  }
-
-  if(e.key === 'ArrowLeft'){
-
-    currentIndex--;
-
-    if(currentIndex < 0){
-
-      currentIndex =
-      slides.length - 1;
-
-    }
-
-    showSlide(currentIndex);
-
-  }
-
-  if(e.key === 'Escape'){
-
-    fullscreen.classList.remove('active');
-
-  }
-
+if(e.key==='Escape'){
+fullscreen.classList.remove('active');
+}
 });
-
 </script>
 
 </body>
