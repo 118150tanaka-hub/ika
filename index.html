@@ -91,21 +91,21 @@ button:hover{opacity:.8;transform:translateY(-2px);}
 </div>
 
 <script>
-window.addEventListener("load",()=>{
 const loading=document.getElementById("loading");
 const intro=document.getElementById("intro");
 const container=document.getElementById("container");
 
-setTimeout(()=>{
+// ページの読み込みが実際に完了したタイミングで、動画を中断して次の画面へ
+// (読み込みが終わっていない間は動画のloop属性により自動で繰り返される)
+window.addEventListener("load",()=>{
 loading.classList.add("hide");
 intro.classList.add("show");
-},4000);
+});
 
 intro.addEventListener("click",()=>{
 intro.classList.add("hide");
 container.classList.add("show");
 document.body.style.overflow="auto";
-});
 });
 
 const slides=document.querySelectorAll('.slide');
