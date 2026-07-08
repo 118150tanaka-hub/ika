@@ -99,11 +99,9 @@ button:hover{opacity:.8;transform:translateY(-2px);}
 const loading=document.getElementById("loading");
 const intro=document.getElementById("intro");
 const container=document.getElementById("container");
+const loadingVideo=document.querySelector("#loading video");
 
-// ページの読み込みが実際に完了したタイミングで次の画面へ切り替える
-// ただし、最低4秒間はローディング画面を表示し続ける
-// (読み込みが4秒より長くかかる場合は、動画のloop属性により自動で繰り返される)
-const loadStartTime=Date.now();
+// 動画の読み込みが完了したタイミングを基準に、最低4秒間ローディング画面を表示する
 const MIN_DISPLAY_MS=4000;
 
 function goToIntro(){
@@ -111,16 +109,16 @@ loading.classList.add("hide");
 intro.classList.add("show");
 }
 
-window.addEventListener("load",()=>{
-const elapsed=Date.now()-loadStartTime;
-const remaining=MIN_DISPLAY_MS-elapsed;
-
-if(remaining>0){
-setTimeout(goToIntro,remaining);
-}else{
-goToIntro();
+function startCountdownFromVideoReady(){
+setTimeout(goToIntro,MIN_DISPLAY_MS);
 }
-});
+
+if(loadingVideo.readyState>=3){
+// すでに再生可能な状態まで読み込み済みなら、すぐカウント開始
+startCountdownFromVideoReady();
+}else{
+loadingVideo.addEventListener("canplaythrough",startCountdownFromVideoReady,{once:true});
+}
 
 intro.addEventListener("click",()=>{
 intro.classList.add("hide");
