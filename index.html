@@ -8,7 +8,7 @@
 body{background:#111;color:white;font-family:sans-serif;width:100%;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:40px;overflow:hidden;}
 #loading{position:fixed;top:0;left:0;width:100vw;height:100vh;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:30px;z-index:999999;opacity:1;visibility:visible;transition:opacity 1s ease,visibility 1s ease;}
 #loading.hide{opacity:0;visibility:hidden;pointer-events:none;}
-#loading video{width:700px;max-width:90vw;max-height:55vh;height:auto;object-fit:contain;}
+#loading video{width:490px;max-width:63vw;max-height:38vh;height:auto;object-fit:contain;}
 .loading-text{color:white;font-size:22px;font-weight:300;letter-spacing:6px;text-transform:uppercase;opacity:1;text-shadow:0 0 12px rgba(255,255,255,.7);animation:blink 1.2s infinite;}
 @keyframes blink{0%{opacity:.3;}50%{opacity:1;}100%{opacity:.3;}}
 
@@ -95,11 +95,26 @@ const loading=document.getElementById("loading");
 const intro=document.getElementById("intro");
 const container=document.getElementById("container");
 
-// ページの読み込みが実際に完了したタイミングで、動画を中断して次の画面へ
-// (読み込みが終わっていない間は動画のloop属性により自動で繰り返される)
-window.addEventListener("load",()=>{
+// ページの読み込みが実際に完了したタイミングで次の画面へ切り替える
+// ただし、最低4秒間はローディング画面を表示し続ける
+// (読み込みが4秒より長くかかる場合は、動画のloop属性により自動で繰り返される)
+const loadStartTime=Date.now();
+const MIN_DISPLAY_MS=4000;
+
+function goToIntro(){
 loading.classList.add("hide");
 intro.classList.add("show");
+}
+
+window.addEventListener("load",()=>{
+const elapsed=Date.now()-loadStartTime;
+const remaining=MIN_DISPLAY_MS-elapsed;
+
+if(remaining>0){
+setTimeout(goToIntro,remaining);
+}else{
+goToIntro();
+}
 });
 
 intro.addEventListener("click",()=>{
