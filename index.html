@@ -103,28 +103,12 @@ PAGES.forEach((count, pIndex) => {
   stack.className = 'page-stack';
 
   const paths = [];
-  const pad = String(pageNum).padStart(2, '0');
   for (let s = 1; s <= count; s++) {
-    const path = `images/${pad}-${s}.${EXT}`;
+    const path = `images/${pageNum}-${s}.${EXT}`;
     paths.push(path);
     const img = document.createElement('img');
     img.src = path;
     img.loading = 'lazy';
-    // フォールバック: 単一画像の命名 (例: 01.jpg または 1.jpg) に対応
-    img.addEventListener('error', function handleError() {
-      if (s !== 1) return; // まずは1枚目のみフォールバックを試す
-      this.removeEventListener('error', handleError);
-      const alt1 = `images/${pad}.${EXT}`;
-      const alt2 = `images/${pageNum}.${EXT}`;
-      // まずゼロパディング無しのファイルを試し、なければページ番号のみのファイルを試す
-      this.addEventListener('error', function tryAlt2() {
-        this.removeEventListener('error', tryAlt2);
-        this.src = alt2;
-        paths[s-1] = alt2;
-      }, {once:true});
-      this.src = alt1;
-      paths[s-1] = alt1;
-    }, {once:true});
     stack.appendChild(img);
   }
   pageImagePaths.push(paths);
