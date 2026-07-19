@@ -104,7 +104,7 @@ PAGES.forEach((count, pIndex) => {
 
   const paths = [];
   for (let s = 1; s <= count; s++) {
-    const path = `images/${pageNum}-${s}.${EXT}`;
+    const path = `images/${String(pageNum).padStart(2, '0')}-${s}.${EXT}`;
     paths.push(path);
     const img = document.createElement('img');
     img.src = path;
